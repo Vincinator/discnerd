@@ -25,6 +25,7 @@ class Disc(yaml.YAMLObject):
         self.fade = fade
         self.turn = turn
         self.id = id
+        self.stability = fade + turn
 
 class DiscSet(yaml.YAMLObject):
     discs: list[Disc]
@@ -43,6 +44,8 @@ class DiscSet(yaml.YAMLObject):
     def number_of_discs(self):
         return len(self.discs)
 
+    def get_discs(self) -> list[Disc]:
+        return self.discs
 
 
 
@@ -57,8 +60,6 @@ class MyDiscs(yaml.YAMLObject):
         self.disc_sets = dict()
 
     def add_set(self, name):
-        print("add_set")
-        print(self.disc_sets)
         if not name in self.disc_sets:
             self.disc_sets[name] = DiscSet(name)
         else:
@@ -74,7 +75,6 @@ class MyDiscs(yaml.YAMLObject):
         return yaml.dump(self.__dict__)
 
     def save(self, path):
-        print("save")
         with open(expanduser(path), 'w+') as outfile:
             yaml.dump(self.__dict__, outfile)
 

@@ -17,6 +17,8 @@ from .data import Disc
 from .data import DiscSet
 from .data import MyDiscs
 
+from .plot import plot_bar
+
 DEFAULT_CONFIG_PATH = "~/.config/discnerd"
 DEFAULT_CONFIG_NAME = "config"
 
@@ -63,7 +65,20 @@ def cli(ctx, config):
             ctx.obj['config'] = cfg
             print(f"INFO: {config} config loaded")
 
+@cli.group()
+@click.pass_obj
+def plot(ctx):
+    pass
 
+
+@plot.command()
+@click.pass_obj
+@click.option('--set', required=True)
+def bar(ctx, set):
+    data_path = ctx['config']['DEFAULT']['DataPath']
+    myDiscs = MyDiscs()
+    myDiscs.load(data_path)
+    plot_bar(myDiscs.get_set(set))
 
 @cli.command()
 @click.pass_obj
