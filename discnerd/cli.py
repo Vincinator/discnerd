@@ -80,7 +80,6 @@ def add_set(ctx, name):
         print("error")
         return False 
 
-
 @cli.command()
 @click.pass_obj
 @click.option('--set', required=True)
@@ -92,7 +91,6 @@ def add_set(ctx, name):
 @click.option('--fade', type=float)
 @click.option('--myid', type=float)
 def add(ctx, set, name, brand, speed, glide, turn, fade, myid):
-
     data_path = ctx['config']['DEFAULT']['DataPath']
 
     myDiscs = MyDiscs()
@@ -105,16 +103,17 @@ def add(ctx, set, name, brand, speed, glide, turn, fade, myid):
     turn = ask_parameter(turn, "turn")
     fade = ask_parameter(fade, "fade")
 
-    newDisc = Disc(name,brand,speed,glide,fade,turn)
 
-    # generate id based on existing discs
-    if myid is None:
-        pass
-   
     targetSet = myDiscs.get_set(set)
     if targetSet is None:
         print("ERROR: target set does not exist. create it with add-set")
         return
+
+    # generate id based on existing discs
+    if myid is None:
+        myid = targetSet.number_of_discs() + 1
+   
+    newDisc = Disc(name, brand, speed, glide, fade, turn, myid)
             
     targetSet.add(newDisc)   
     myDiscs.save(data_path)

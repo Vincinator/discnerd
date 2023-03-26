@@ -15,14 +15,16 @@ class Disc(yaml.YAMLObject):
     stability: float
     brand: str
     name: str
+    id: int
 
-    def __init__(self, name, brand, speed, glide, fade, turn):
+    def __init__(self, name, brand, speed, glide, fade, turn, id):
         self.name = name
         self.brand = brand
         self.speed = speed
         self.glide = glide
         self.fade = fade
         self.turn = turn
+        self.id = id
 
 class DiscSet(yaml.YAMLObject):
     discs: list[Disc]
@@ -62,7 +64,7 @@ class MyDiscs(yaml.YAMLObject):
         else:
             print(f"INFO: disc set {name} already exists")
 
-    def get_set(self, sname):
+    def get_set(self, sname) -> DiscSet:
         if sname in self.disc_sets:
             return self.disc_sets[sname]
         else:
