@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "discnerd"
+version = "0.1.0"
+description = ""
+authors = ["Vincent Riesop <vincent.riesop@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.3"
+pyyaml = "^6.0"
+
+
+[tool.poetry.scripts]
+discnerd = "discnerd.cli:cli"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
