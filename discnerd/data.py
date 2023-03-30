@@ -91,6 +91,10 @@ class MyDiscs(yaml.YAMLObject):
         else:
             return None
 
+    def remove_set(self, name):
+        if name in self.disc_sets:
+            del self.disc_sets[name]
+
     def to_yaml(self):
         return yaml.dump(self.__dict__)
 

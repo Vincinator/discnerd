@@ -102,6 +102,16 @@ def remove(ctx, set, myid):
 @cli.command()
 @click.pass_obj
 @click.option('--set', required=True)
+def remove_set(ctx, set):
+    data_path = ctx['config']['DEFAULT']['DataPath']
+    myDiscs = MyDiscs()
+    myDiscs.load(data_path)
+    myDiscs.remove_set(set)
+    myDiscs.save(data_path)
+
+@cli.command()
+@click.pass_obj
+@click.option('--set', required=True)
 @click.option('--name')
 @click.option('--brand')
 @click.option('--speed', type=float)
