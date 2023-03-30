@@ -11,6 +11,7 @@ import pprint
 from pathlib import Path
 from os.path import expanduser
 
+from .utils import  default_config
 from .utils import load_config
 from .utils import ask_parameter
 from .data import Disc
@@ -22,15 +23,6 @@ from .plot import plot_bar
 DEFAULT_CONFIG_PATH = "~/.config/discnerd"
 DEFAULT_CONFIG_NAME = "config"
 
-
-def default_config():
-    config = configparser.ConfigParser()
-
-    config['DEFAULT'] = {
-        'DataPath': '~/.config/discnerd/data.yml'
-    }
-
-    return config
 
 @click.group()
 @click.option('--config', type=str)
@@ -94,6 +86,18 @@ def add_set(ctx, name):
     except:
         print("error")
         return False 
+
+
+@cli.command()
+@click.pass_obj
+@click.option('--set', required=True)
+@click.option('--myid', type=float, required=True)
+def remove(ctx, set, myid):
+    data_path = ctx['config']['DEFAULT']['DataPath']
+    myDiscs = MyDiscs()
+    myDiscs.load(data_path)
+    myDiscs.get_set(set).remove(myid)
+    myDiscs.save(data_path)
 
 @cli.command()
 @click.pass_obj

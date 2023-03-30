@@ -27,6 +27,12 @@ class Disc(yaml.YAMLObject):
         self.id = id
         self.stability = fade + turn
 
+    def __repr__(self):
+        return f"<Disc name: {self.name} brand:{self.brand} id:{self.id}>"
+
+    def __str__(self):
+        return f"<Disc name: {self.name} brand:{self.brand} id:{self.id}>"
+
 class DiscSet(yaml.YAMLObject):
     discs: list[Disc]
     name: str
@@ -40,13 +46,27 @@ class DiscSet(yaml.YAMLObject):
 
     def add(self, disc: Disc):
         self.discs.append(disc)
-   
+
+    def remove(self, myid: int):
+        self.discs = [d for d in self.discs if d.id != myid ]
+
     def number_of_discs(self):
         return len(self.discs)
 
     def get_discs(self) -> list[Disc]:
         return self.discs
 
+    def __repr__(self):
+        ret=""
+        for d in self.discs:
+            ret=f"{ret}\n{d}"
+        return ret
+
+    def __str__(self):
+        ret=f"Discs ({self.number_of_discs()}):"
+        for d in self.discs:
+            ret=f"{ret}\n\t{d}"
+        return ret
 
 
 class MyDiscs(yaml.YAMLObject):

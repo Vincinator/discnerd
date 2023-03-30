@@ -11,3 +11,14 @@ def load_config(path):
     config = configparser.ConfigParser()
     config.read_file(open(path))
     return config
+
+def default_config():
+    config = configparser.ConfigParser()
+
+    config['DEFAULT'] = {
+        'DataPath': '~/.config/discnerd/data.yml'
+    }
+
+    return config
+
+
